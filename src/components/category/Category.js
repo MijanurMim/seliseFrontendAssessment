@@ -1,68 +1,33 @@
 import React from "react";
+import CategoryDetails from "./CategoryDetails";
+import CategoryItems from "./CategoryItems";
 
-const Category = () => {
+const Category = ({ data }) => {
   return (
     <div className="grid grid-cols-2 gap-4 mx-36 my-20">
       <div>
         <div>
           <div>Category:A</div>
           <div className="border-2 p-2">
-            <ul className="flex justify-between">
-              <li>Javascript Tutorial </li>
-              <li className="mt-1">
-                {" "}
-                <button class="rounded-sm bg-gray-200  p-2 border-gray-600 hover:bg-gray-300 duration-200">
-                  Details
-                </button>
-              </li>
-            </ul>
-
-            <ul className="flex justify-between">
-              <li>Angular Basics</li>
-              <li className="mt-1">
-                {" "}
-                <button class="rounded-sm bg-gray-200  p-2 border-gray-600 hover:bg-gray-300 duration-200">
-                  Details
-                </button>
-              </li>
-            </ul>
-            <ul className="flex justify-between ">
-              <li>React Introduction</li>
-              <li className="mt-1">
-                <button class="rounded-sm bg-gray-200  p-2 border-gray-600 hover:bg-gray-300 duration-200">
-                  Details
-                </button>
-              </li>
-            </ul>
+            {data.map((data, index) => (
+              <CategoryItems key={index} data={data} />
+            ))}
           </div>
         </div>
         <div className="mt-10">
           <div>Category:B</div>
           <div className="border-2 p-2">
-            <ul className="flex justify-between">
-              <li>Best Food in Dhaka To eat</li>
-              <li className="mt-1">
-                {" "}
-                <button class="rounded-sm bg-gray-200  p-2 border-gray-600 hover:bg-gray-300 duration-200">
-                  Details
-                </button>
-              </li>
-            </ul>
-
-            <ul className="flex justify-between">
-              <li>Burger Vs Pizza</li>
-              <li className="mt-1">
-                {" "}
-                <button class="rounded-sm bg-gray-200  p-2 border-gray-600 hover:bg-gray-300 duration-200">
-                  Details
-                </button>
-              </li>
-            </ul>
+            {data.map((data, index) => (
+              <CategoryItems key={index} data={data} />
+            ))}
           </div>
         </div>
       </div>
-
-      <div>Modal</div>
+      <div>
+        {data.map((data, index) => (
+          <CategoryDetails key={index} data={data} />
+        ))}
+      </div>
     </div>
   );
 };

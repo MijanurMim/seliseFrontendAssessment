@@ -1,14 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import Category from "../category/Category";
 
 const Bookmark = () => {
   const [showModal, setShowModal] = useState(false);
+  const [myData, setMyData] = useState([]);
   const { register, handleSubmit } = useForm();
+
+  // Load data from localStorage when the component mounts
+  useEffect(() => {
+    const storedData = localStorage.getItem("myData");
+    if (storedData) {
+      setMyData(JSON.parse(storedData));
+    }
+  }, []);
+
+  // Update data and save it to localStorage
   const onSubmit = (data) => {
-    console.log(data);
-    localStorage.setItem("items", JSON.stringify(data));
+    const newData = [...myData, data];
+    setMyData(newData);
+    localStorage.setItem("myData", JSON.stringify(newData));
+    console.log(myData);
   };
+
+  // const onSubmit = (data) => {
+  //   console.log(data);
+  //   localStorage.setItem("items", JSON.stringify({ ...data }));
+  // };
 
   return (
     <div>
@@ -66,15 +84,13 @@ const Bookmark = () => {
 
                         <select
                           {...register("category")}
-                          placeholder="Category"
                           className="px-20 py-1 m-4 border-2"
                         >
                           <option value="category" disabled>
-                            {" "}
                             Select Category
                           </option>
-                          <option value="categoryA">Category A</option>
-                          <option value="categoryB">Category B</option>
+                          <option value="Category A">Category A</option>
+                          <option value="Category B">Category B</option>
                         </select>
 
                         <div className="flex items-center justify-end p-6 border-t border-solid border-slate-200 rounded-b">
@@ -85,8 +101,10 @@ const Bookmark = () => {
                           >
                             Cancel
                           </button>
-
-                          <input type="submit" />
+                          <input
+                            type="submit"
+                            className="text-green-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150 cursor-pointer"
+                          />
                         </div>
                       </form>
                     </div>
@@ -100,8 +118,7 @@ const Bookmark = () => {
         </div>
       </div>
 
-      {/* category component  */}
-      <Category />
+      <Category data={myData} />
     </div>
   );
 };
